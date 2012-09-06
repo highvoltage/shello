@@ -33,7 +33,7 @@ read backgroundcolour
 
 echo -e "\nChoose a foreground colour:"
 for colour in $(seq 30 37); do
-    echo -e "\e[1;"$colour"m  $colour  \e[0;37m  \c"
+    echo -e "\e[1;"$colour"m\e[1;"$backgroundcolour"m  $colour  \e[0;37m  \c"
 done
 echo -e "\n> \c"
 read foregroundcolour
