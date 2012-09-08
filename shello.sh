@@ -50,7 +50,7 @@ echo -e "\e[1;"$backgroundcolour"m\e[1;"$foregroundcolour"m $character \e[0;37m\
 echo ""
 
 mkdir -p ~/.config
-echo '\e[1;'$backgroundcolour'm\e[1;'$foregroundcolour'm' $character' \e[00;00m ' > ~/.config/shello
+echo '\[\e[1;'$backgroundcolour'm\e[1;'$foregroundcolour'm\]' $character' \[\e[00;00m\] ' > ~/.config/shello
 
 echo "Tip: Add this to the end of your .bashrc to enable this shell logo:"
 echo '     PS1=$(cat ~/.config/shello)$PS1'
