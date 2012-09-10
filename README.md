@@ -15,8 +15,8 @@ Hmm, what else can I say... patches welcome?
 
 ### Trivia
 
-Shello is also "An extremely casual and almost lazy way of greeting someone."
+Shello is also "An extremely casual and almost lazy way of greeting someone.":
 - http://www.urbandictionary.com/define.php?term=shello
 
-Shellos are a type of water Pokémon
+Shellos are a type of water Pokémon:
 - http://bulbapedia.bulbagarden.net/wiki/Shellos_(Pok%C3%A9mon)
