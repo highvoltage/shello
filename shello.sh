@@ -26,14 +26,14 @@
 
 echo "Choose a background colour:"
 for colour in $(seq 40 47); do
-    echo -e "\e[1;"$colour"m  $colour  \e[0;37m  \c"
+    echo -e "\033[1;"$colour"m  $colour  \033[0;37m  \c"
 done
 echo -e "\n> \c"
 read backgroundcolour
 
 echo -e "\nChoose a foreground colour:"
 for colour in $(seq 30 37); do
-    echo -e "\e[1;"$colour"m\e[1;"$backgroundcolour"m  $colour  \e[0;37m  \c"
+    echo -e "\033[1;"$colour"m\033[1;"$backgroundcolour"m  $colour  \033[0;37m  \c"
 done
 echo -e "\n> \c"
 read foregroundcolour
@@ -46,11 +46,11 @@ echo -e "> \c"
 read character
 
 echo -e "\nHere is your new shell logo:"
-echo -e "\e[1;"$backgroundcolour"m\e[1;"$foregroundcolour"m $character \e[0;37m\n"
+echo -e "\033[1;"$backgroundcolour"m\033[1;"$foregroundcolour"m $character \033[0;37m\n"
 echo ""
 
 mkdir -p ~/.config
-echo '\[\e[1;'$backgroundcolour'm\e[1;'$foregroundcolour'm\]' $character' \[\e[00;00m\] ' > ~/.config/shello
+echo '\[\033[1;'$backgroundcolour'm\033[1;'$foregroundcolour'm\]' $character' \[\033[00;00m\] ' > ~/.config/shello
 
 echo "Tip: Add this to the end of your .bashrc to enable this shell logo:"
 echo '     PS1=$(cat ~/.config/shello)$PS1'
