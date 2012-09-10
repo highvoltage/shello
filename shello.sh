@@ -38,10 +38,20 @@ done
 echo -e "\n> \c"
 read foregroundcolour
 
+logos=(◉ ♥ ☕ ♫ ☢ ★ ☆ ☣ ☺ ☹ ✉ ☯ ✈ ☮ ✆ ⛃ ☠ ☃ ‽ ⊙)
 echo -e "\nType a character or copy and paste one of these unicode ones:"
-echo " ◉  ♥  ☕ ♫ ☢ ★ ☆ ☣  ☺  ☹  ✉  ☯  ✈  ☮  ✆  ⛃  ☠  ☃  ‽  ⊙"
-#TODO:
-#echo "based on your hostname, we like this one: ☢"
+echo "${logos[*]}"
+
+if [ -x "$(which hostname)" -a -x "$(which sed)" ]; then
+    sum=0
+    for letter in $(hostname | sed -e 's,\.,,g' -e 's,\(.\),\1 ,g')
+    do
+        sum=$(($sum+$(printf '%d' "'$letter")))
+    done
+    suggestion="${logos[ $(( $sum % ${#logos[*]} )) ]}"
+    echo "based on your hostname, we like this one: $suggestion"
+fi
+
 echo -e "> \c"
 read character
 
