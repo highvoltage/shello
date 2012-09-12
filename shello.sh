@@ -38,19 +38,32 @@ done
 echo -e "\n> \c"
 read foregroundcolour
 
-echo -e "\nType a character or copy and paste one of these unicode ones:"
-echo " ◉  ♥  ☕ ♫ ☢ ★ ☆ ☣  ☺  ☹  ✉  ☯  ✈  ☮  ✆  ⛃  ☠  ☃  ‽  ⊙"
-#TODO:
-#echo "based on your hostname, we like this one: ☢"
-echo -e "> \c"
-read character
+echo -e "\nWould you like to have a character, time, or both?:"
+echo -e "\n> [C|t|b]"
+read use
+{ [ "$use" == "b" ] || [ "$use" == "t" ] ; } && time_code="\t "
+
+
+if [ "$use" != "t" ]
+then
+	echo -e "\nType a character or copy and paste one of these unicode ones:"
+	echo " ◉  ♥  ☕ ♫ ☢ ★ ☆ ☣  ☺  ☹  ✉  ☯  ✈  ☮  ✆  ⛃  ☠  ☃  ‽  ⊙"
+	#TODO:
+	#echo "based on your hostname, we like this one: ☢"
+	echo -e "> \c"
+	read character
+fi
+
 
 echo -e "\nHere is your new shell logo:"
-echo -e "\e[1;"$backgroundcolour"m\e[1;"$foregroundcolour"m $character \e[0;37m\n"
+echo -en "\e[1;"$backgroundcolour"m\e[1;"$foregroundcolour"m"
+# Only show the example date if neccesary
+{ [ "$use" == "b" ] || [ "$use" == "t" ] ; } && echo -n "`date +%H:%M:%S` "
+echo -e "$character \e[0;37m"
 echo ""
 
 mkdir -p ~/.config
-echo '\[\e[1;'$backgroundcolour'm\e[1;'$foregroundcolour'm\]' $character' \[\e[00;00m\] ' > ~/.config/shello
+echo '\[\e[1;'$backgroundcolour'm\e[1;'$foregroundcolour'm\]'${time_code:-' '}${character}' \[\e[00;00m\] ' > ~/.config/shello
 
 echo "Tip: Add this to the end of your .bashrc to enable this shell logo:"
 echo '     PS1=$(cat ~/.config/shello)$PS1'
