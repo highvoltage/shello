@@ -24,33 +24,63 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-echo "Choose a background colour:"
-for colour in $(seq 40 47); do
-    echo -e "\e[1;"$colour"m  $colour  \e[0;37m  \c"
-done
-echo -e "\n> \c"
-read backgroundcolour
+param_auto="false"
+# Do simple parsing, getopt(s) is not used following the KISS principle
+if [ "$1" = '-a' -o "$1" = '--auto' ]; then
+    param_auto="true"
+fi
 
-echo -e "\nChoose a foreground colour:"
-for colour in $(seq 30 37); do
-    echo -e "\e[1;"$colour"m\e[1;"$backgroundcolour"m  $colour  \e[0;37m  \c"
-done
-echo -e "\n> \c"
-read foregroundcolour
+if [ "$param_auto" = "true" ]; then
+    backgroundcolour=$[RANDOM%8+40]
+    echo -e "Auto choosing background color: \033[1;${backgroundcolour}m $backgroundcolour \033[0;37m"
+else
+    echo "Choose a background colour:"
+    for colour in $(seq 40 47); do
+        echo -e "\033[1;"$colour"m  $colour  \033[0;37m  \c"
+    done
+    echo -e "\n> \c"
+    read backgroundcolour
+fi
 
+if [ "$param_auto" = "true" ]; then
+    foregroundcolour=$[RANDOM%8+30]
+    echo -e "Auto choosing foreground color: \033[1;"$backgroundcolour"m\033[1;"$foregroundcolour"m $foregroundcolour \033[0;37m"
+else
+    echo -e "\nChoose a foreground colour:"
+    for colour in $(seq 30 37); do
+        echo -e "\033[1;"$colour"m\033[1;"$backgroundcolour"m  $colour  \033[0;37m  \c"
+    done
+    echo -e "\n> \c"
+    read foregroundcolour
+fi
+
+logos=(◉ ♥ ☕ ♫ ☢ ★ ☆ ☣ ☺ ☹ ✉ ☯ ✈ ☮ ✆ ⛃ ☠ ☃ ‽ ⊙)
 echo -e "\nType a character or copy and paste one of these unicode ones:"
-echo " ◉  ♥  ☕ ♫ ☢ ★ ☆ ☣  ☺  ☹  ✉  ☯  ✈  ☮  ✆  ⛃  ☠  ☃  ‽  ⊙"
-#TODO:
-#echo "based on your hostname, we like this one: ☢"
-echo -e "> \c"
-read character
+echo "${logos[*]}"
+
+if [ -x "$(which hostname)" -a -x "$(which sed)" ]; then
+    sum=0
+    for letter in $(hostname | sed -e 's,\.,,g' -e 's,\(.\),\1 ,g')
+    do
+        sum=$(($sum+$(printf '%d' "'$letter")))
+    done
+    suggestion="${logos[ $(( $sum % ${#logos[*]} )) ]}"
+    echo "based on your hostname, we like this one: $suggestion"
+fi
+
+if [ "$param_auto" = "true" ]; then
+    character="$suggestion"
+else
+    echo -e "> \c"
+    read character
+fi
 
 echo -e "\nHere is your new shell logo:"
-echo -e "\e[1;"$backgroundcolour"m\e[1;"$foregroundcolour"m $character \e[0;37m\n"
+echo -e "\033[1;"$backgroundcolour"m\033[1;"$foregroundcolour"m $character \033[0;37m\n"
 echo ""
 
 mkdir -p ~/.config
-echo '\[\e[1;'$backgroundcolour'm\e[1;'$foregroundcolour'm\]' $character' \[\e[00;00m\] ' > ~/.config/shello
+echo '\[\033[1;'$backgroundcolour'm\033[1;'$foregroundcolour'm\]' $character' \[\033[00;00m\] ' > ~/.config/shello
 
 echo "Tip: Add this to the end of your .bashrc to enable this shell logo:"
 echo '     PS1=$(cat ~/.config/shello)$PS1'
