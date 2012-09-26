@@ -77,7 +77,6 @@ fi
 
 echo -e "\nHere is your new shell logo:"
 echo -e "\033[1;"$backgroundcolour"m\033[1;"$foregroundcolour"m $character \033[0;37m\n"
-echo ""
 
 mkdir -p ~/.config
 echo '\[\033[1;'$backgroundcolour'm\033[1;'$foregroundcolour'm\]' $character' \[\033[00;00m\] ' > ~/.config/shello
