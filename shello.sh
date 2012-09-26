@@ -54,7 +54,7 @@ else
     read foregroundcolour
 fi
 
-logos=(◉ ♥ ☕ ♫ ☢ ★ ☆ ☣ ☺ ☹ ✉ ☯ ✈ ☮ ✆ ⛃ ☠ ☃ ‽ ⊙)
+logos=(◉ ♥ ☕ ♫ ☢ ★ ☆ ☣ ☺ ☹ ✉ ☯ ✈ ☮ ✆ ⛃ ☠ ☃ ‽ ⊙ ◕ ◔ ⁂ ♚ ✪ ᨖ ⊚ ❎)
 echo -e "\nType a character or copy and paste one of these unicode ones:"
 echo "${logos[*]}"
 
